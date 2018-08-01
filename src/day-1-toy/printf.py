@@ -9,6 +9,3 @@ print(f'x is {x}, y is {round(y, 2)}, z is "{z}"')
 
 # Use the 'format' string method to print the same thing
 print('x is %d, y is %.2f, z is "%s"' % (x, y, z))
-
-#trailing 000s
-
