@@ -5,7 +5,7 @@ def is_even(n):
 print(is_even(5))    
 # Read a number from the keyboard
 num = input("Enter a number: ")
-if num % 2 == 0:
+if int(num) % 2 == 0:
     print('Even!')
 else: 
     print('Odd')    
