@@ -17,9 +17,9 @@ import sys
 import calendar
 import datetime
 
-month_year = input ("Enter a month and year: ")
-# print(month_year)
-# # itermonthdates(month_year[0], month_year[1])
-# str = calendar.monthcalendar(1999, 1)
-# print(str)
-print(sys.argv)
+month = int(input("Enter a month 1 - 12: "))
+year = int(input("Enter a 4 digit year: "))
+# str = calendar.itermonthdates(year, month)
+str = calendar.monthcalendar(year, month)
+print(str)
+# print(sys.argv)

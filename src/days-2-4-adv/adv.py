@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -19,6 +20,8 @@ to north. The smell of gold permeates the air."""),
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
+
+'library': Room("Library", """Yes, we do have copies of Harry Potter."""),
 }
 
 
@@ -32,19 +35,36 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['overlook'].w_to = room['library']
+room['library'].e_to = room['overlook']
 
 #
 # Main
 #
 
 # Make a new player object that is currently in the 'outside' room.
-
+lola = Player( room['outside'])
 # Write a loop that:
-#
+while not dir == "q":
 # * Prints the current room name
+    print(lola.room)
 # * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
+    print(lola.room.description)
+# * Waits for user input  
+    dir = input("Please enter a direction... n, s, e, w OR q to quit the game: ")
+#decides what to do.
+    if dir == "n":
+        print('North')
+
+    # elif south
+    # elif east
+    # elif west
+    # elif invalid
+
+    # else:
+    #     dir == "q":
+    #     print("Quitter!")
+    #     return "Exit"
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
