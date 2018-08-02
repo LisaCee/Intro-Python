@@ -43,28 +43,30 @@ room['library'].e_to = room['overlook']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-lola = Player( room['outside'])
+player = Player( 'Lola', room['outside'])
 # Write a loop that:
 while not dir == "q":
 # * Prints the current room name
-    print(lola.room)
+    print(player.room, ":", player.room.description)
 # * Prints the current description (the textwrap module might be useful here).
-    print(lola.room.description)
+
 # * Waits for user input  
     dir = input("Please enter a direction... n, s, e, w OR q to quit the game: ")
 #decides what to do.
     if dir == "n":
-        print('North')
-
-    # elif south
-    # elif east
-    # elif west
+        player.room = getattr(player.room, dir + '_to')
+    elif dir == "s":
+        player.room = getattr(player.room, dir + '_to')
+    elif dir == "e":
+        player.room = getattr(player.room, dir + '_to')
+    elif dir == "w":
+        player.room = getattr(player.room, dir + '_to')
     # elif invalid
-
-    # else:
-    #     dir == "q":
-    #     print("Quitter!")
-    #     return "Exit"
+    elif dir == "q":
+        print("Quitter!")
+        "Exit"
+    else:
+        print("Chose a direction or q to quit")    
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
