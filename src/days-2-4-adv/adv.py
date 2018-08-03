@@ -6,21 +6,16 @@ from player import Player
 room = {
     'outside':  Room("--Outside Cave Entrance--",
                      "North of you, the cave mount beckons"),
-
     'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty
 passages run north and east."""),
-
     'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
-
     'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
-
     'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
-
 'library': Room("--Library--", """Shhhhhhh."""),
 }
 
@@ -46,10 +41,11 @@ room['library'].e_to = room['overlook']
 player = Player( 'Lola', room['outside'])
 
 print(f"Welcome {player.name}")
+print(player.room, "\n", player.room.description)
 # Write a loop that:
 while not dir == "q":
 # * Prints the current room name
-    print(player.room, "\n", player.room.description)
+
 # * Prints the current description (the textwrap module might be useful here).
 
 # * Waits for user input  
@@ -57,10 +53,11 @@ while not dir == "q":
 
     if dir is "n" or dir is "e" or dir is "w" or dir is "s":
         if hasattr(player.room, dir + '_to'):
-            player.room = getattr(player.room, dir + '_to')   
+            player.room = getattr(player.room, dir + '_to')  
+            print(player.room, "\n", player.room.description) 
         else:
-            print("Wall")
-    else:
+            print("That direction is a dead end.")
+    elif dir != "q":
         print("**Choose a direction or q to quit**")
 #     elif dir == "n" or "s" or "e" or "w":
 #         if hasattr(player.room, dir+'_to'):
