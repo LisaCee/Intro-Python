@@ -45,10 +45,9 @@ print(player.room, "\n", player.room.description)
 # Write a loop that:
 while not dir == "q":
 # * Prints the current room name
-
 # * Prints the current description (the textwrap module might be useful here).
+# * Waits for user input *
 
-# * Waits for user input  
     dir = input("Please enter a direction... n, s, e, w OR q to quit the game: ")
 
     if dir is "n" or dir is "e" or dir is "w" or dir is "s":
@@ -56,11 +55,11 @@ while not dir == "q":
             player.room = getattr(player.room, dir + '_to')  
             print(player.room, "\n", player.room.description) 
         else:
-            print("xx--That direction is a dead end.--x")
+            print("xx--That direction is a dead end.--xx")
     elif dir != "q":
         print("**Choose a direction or q to quit**")
 
-print("Quitter!")
+print("You quit the adventure!  :( ")
 "Exit"
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
