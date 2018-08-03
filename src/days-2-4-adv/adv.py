@@ -40,7 +40,7 @@ room['library'].e_to = room['overlook']
 # Make a new player object that is currently in the 'outside' room.
 player = Player( 'Lola', room['outside'])
 
-print(f"Welcome {player.name}")
+print(f"Welcome, {player.name}! Let's begin our adventure:")
 print(player.room, "\n", player.room.description)
 # Write a loop that:
 while not dir == "q":
@@ -56,18 +56,9 @@ while not dir == "q":
             player.room = getattr(player.room, dir + '_to')  
             print(player.room, "\n", player.room.description) 
         else:
-            print("That direction is a dead end.")
+            print("xx--That direction is a dead end.--x")
     elif dir != "q":
         print("**Choose a direction or q to quit**")
-#     elif dir == "n" or "s" or "e" or "w":
-#         if hasattr(player.room, dir+'_to'):
-#             if getattr(player.room, dir + '_to') == player.room:
-#                 print('Ther')
-#             else:
-#                 player.room = getattr(player.room, dir + '_to')
-#     # else:
-#     #     print("There's no door in that direction")
-
 
 print("Quitter!")
 "Exit"
