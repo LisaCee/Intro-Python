@@ -4,24 +4,24 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
+    'outside':  Room("--Outside Cave Entrance--",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 
-'library': Room("Library", """Yes, we do have copies of Harry Potter."""),
+'library': Room("--Library--", """Shhhhhhh."""),
 }
 
 
@@ -44,29 +44,36 @@ room['library'].e_to = room['overlook']
 
 # Make a new player object that is currently in the 'outside' room.
 player = Player( 'Lola', room['outside'])
+
+print(f"Welcome {player.name}")
 # Write a loop that:
 while not dir == "q":
 # * Prints the current room name
-    print(player.room, ":", player.room.description)
+    print(player.room, "\n", player.room.description)
 # * Prints the current description (the textwrap module might be useful here).
 
 # * Waits for user input  
     dir = input("Please enter a direction... n, s, e, w OR q to quit the game: ")
-#decides what to do.
-    if dir == "n":
-        player.room = getattr(player.room, dir + '_to')
-    elif dir == "s":
-        player.room = getattr(player.room, dir + '_to')
-    elif dir == "e":
-        player.room = getattr(player.room, dir + '_to')
-    elif dir == "w":
-        player.room = getattr(player.room, dir + '_to')
-    # elif invalid
-    elif dir == "q":
-        print("Quitter!")
-        "Exit"
+
+    if dir is "n" or dir is "e" or dir is "w" or dir is "s":
+        if hasattr(player.room, dir + '_to'):
+            player.room = getattr(player.room, dir + '_to')   
+        else:
+            print("Wall")
     else:
-        print("Chose a direction or q to quit")    
+        print("**Choose a direction or q to quit**")
+#     elif dir == "n" or "s" or "e" or "w":
+#         if hasattr(player.room, dir+'_to'):
+#             if getattr(player.room, dir + '_to') == player.room:
+#                 print('Ther')
+#             else:
+#                 player.room = getattr(player.room, dir + '_to')
+#     # else:
+#     #     print("There's no door in that direction")
+
+
+print("Quitter!")
+"Exit"
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
