@@ -1,24 +1,24 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("--Outside Cave Entrance--",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [Item('Key', "This key opens something")]),
     'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item('Lantern', 'Use this lantern to light the way ahead')]),
     'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [Item('Sword', 'It is dangerous to go alone. Take this sword')]),
     'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [Item('Coins', 'These coins look like they are worth a lot of money')]),
     'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
-'library': Room("--Library--", """Shhhhhhh."""),
+earlier adventurers. The only exit is to the south.""", [Item('Potion', 'An unknown potion. Use at your own risk')]),
+'library': Room("--Library--", """Shhhhhhh.""", [Item('Book', 'Relax and look at this book')]),
 }
-
 
 # Link rooms together
 
@@ -38,7 +38,7 @@ room['library'].e_to = room['overlook']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player( 'Lola', room['outside'])
+player = Player( 'Lola', room['outside'], [ ])
 
 print(f"Welcome, {player.name}! Let's begin our adventure:")
 print(player.room, "\n", player.room.description)
@@ -48,20 +48,62 @@ while not dir == "q":
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input *
 
-    dir = input("Please enter a direction... n, s, e, w OR q to quit the game: ")
+    dir = input("------------------\nPlease enter a direction... n, s, e, w OR q to quit the game. Press m for more options. \n---------\n")
+    parsed_dir = dir.split()
 
-    if dir is "n" or dir is "e" or dir is "w" or dir is "s":
-        if hasattr(player.room, dir + '_to'):
-            player.room = getattr(player.room, dir + '_to')  
-            print(player.room, "\n", player.room.description) 
-        else:
-            print("xx--That direction is a dead end.--xx")
-    elif dir != "q":
-        print("**Choose a direction or q to quit**")
+    if len(parsed_dir) is 1:
+        # directional inputs
+        if dir is "n" or dir is "e" or dir is "w" or dir is "s":
+            if hasattr(player.room, dir + '_to'):
+                player.room = getattr(player.room, dir + '_to')
+                print(player.room, "\n", player.room.description, "\n") 
+                print("Items in this room:")     
+                if len(player.room.items) == 0:
+                    print("none")   
+                else:
+                    for i in player.room.items:
+                        print("\t" + i.name + ": " + i.description)
+            else:
+                print("xx--That direction is a dead end.--xx")
+        elif dir == "i" or dir == "inventory":
+            print("Inventory:")
+            for item in player.inventory:
+                print("\t" + item.name)
+        elif dir == "m" or dir == "menu":
+            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nItems      | get item or drop item \nInventory  | i ")        
+        elif dir != "q":
+            print("**Invalid choice. m for options **")
 
+        
+    if len(parsed_dir) > 1:
+        action = parsed_dir[0]
+        item = ""
+        for i in range(1, len(parsed_dir)):
+            item += parsed_dir[i] + ' '
+        item = item.strip()    
+
+        if action == "g" or action == "get":
+            for i in player.room.items:
+                if parsed_dir[1] == i.name:
+                    print("Adding item to inventory")
+                    # put item in player inventory
+                    player.inventory.append(i)
+                    # remove item from room inventory
+                    player.room.items.remove(i)
+        elif action == "d" or action == "drop":
+            for i in player.room.items:
+                if parsed_dir[1] == i.name:
+                    print("Removing item to inventory")
+                    # put item in player inventory
+                    player.inventory.pop(i)
+                    # remove item from room inventory
+                    player.room.items.append(i)
 print("You quit the adventure!  :( ")
 "Exit"
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+
