@@ -5,28 +5,36 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("--Outside Cave Entrance--", "North of you, the cave mount beckons", [Item('Key', "This key opens something")]),
-    'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty passages run north and east.""", [Item('Lantern', 'Use this lantern to light the way ahead')]),
-    'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", [Item('Sword', 'It is dangerous to go alone. Take this sword')]),
-    'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west to north. The smell of gold permeates the air.""", [Item('Coins', 'These coins look like they are worth a lot of money')]),
-    'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by
+    'outside':  Room("--Outside--", "There is a blue 'police box' to the north of you. It is the about the size of an old phone box. There is a light on the top. The door is open", [Item('Key', "This key opens something")]),
+
+    'inside':    Room("--Console Room--", """It's bigger on the inside!!! There is a large device in the middle with screens and lights and buttons. Go north to look closer. There are also doorways to your left and right.""", [Item('Lantern', 'Use this lantern to light the way ahead')]),
+
+    'console': Room("--TARDIS Console--", """Description of console""", [Item('Sword', 'It is dangerous to go alone. Take this sword')]),
+
+    'bedroom':   Room("--Bedroom with Bunk Beds--", """The narrow passage bends here from west to north. The smell of gold permeates the air.""", [Item('Coins', 'These coins look like they are worth a lot of money')]),
+
+    'wardrobe': Room("--Wardrobe--", """You've found the long-lost wardrobe chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", [Item('Potion', 'An unknown potion. Use at your own risk')]),
+
+    'pool': Room("--Swimming Pool--", "", []),
+
+    'garden': Room("--Garden--", "", []),
+
     'library': Room("--Library--", """Shhhhhhh.""", [Item('Book', 'Relax and look at this book')]),
 }
 
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
-room['overlook'].w_to = room['library']
-room['library'].e_to = room['overlook']
+room['outside'].n_to = room['inside']
+room['inside'].s_to = room['outside']
+room['inside'].n_to = room['console']
+room['console'].s_to = room['inside']
+room['inside'].e_to = room['bedroom']
+room['bedroom'].w_to = room['inside']
+room['bedroom'].s_to = room['wardrobe']
+room['wardrobe'].n_to = room['bedroom']
+room['console'].w_to = room['library']
+room['library'].e_to = room['console']
 
 #
 # Main
@@ -44,7 +52,7 @@ while dir != "q" and dir != "quit":
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input *
 
-    dir = input("------------------\nPlease enter a direction... n, s, e, w OR q to quit the game. Press m for more options. \n---------\n").lower()
+    dir = input("------------------\nPlease enter a direction... n, s, e, w OR q to quit the game. \nPress m for more options. \n---------\n").lower()
     parsed_dir = dir.lower().split()
 
     if len(parsed_dir) is 1:
@@ -60,13 +68,13 @@ while dir != "q" and dir != "quit":
                     for i in player.room.items:
                         print("\t" + i.name + ": " + i.description)
             else:
-                print("xx--That direction is a dead end.--xx")
+                print("xx--That direction is a de ad end.--xx")
         elif dir == "i" or dir == "inventory":
             print("Inventory:")
             for item in player.inventory:
                 print("\t" + item.name)
         elif dir == "m" or dir == "menu":
-            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nPick Up Item      | get (item name) \n Drop Item  | drop (item name) \nInventory  | i\nQuit       | q")        
+            print("Move North   | n \nMove South   | s \nMove East    | e \nMove West    | w \nPick Up Item | get (item name) \nDrop Item    | drop (item name) \nInventory    | i\nQuit         | q")        
         elif dir != "q":
             print("**Invalid choice. m for options **")
 
