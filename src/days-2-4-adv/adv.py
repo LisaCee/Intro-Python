@@ -38,12 +38,13 @@ room['library'].e_to = room['overlook']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player( 'Lola', room['outside'], [ ])
+name = input('Hello, player.  What is your name?')
+player = Player( name, room['outside'], [ ])
 
 print(f"Welcome, {player.name}! Let's begin our adventure:")
 print(player.room, "\n", player.room.description)
 # Write a loop that:
-while not dir == "q":
+while not dir is "q" or dir is "quit":
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input *
@@ -70,7 +71,7 @@ while not dir == "q":
             for item in player.inventory:
                 print("\t" + item.name)
         elif dir == "m" or dir == "menu":
-            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nItems      | get item or drop item \nInventory  | i ")        
+            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nItems      | get item or drop item \nInventory  | i\nQuit       | q")        
         elif dir != "q":
             print("**Invalid choice. m for options **")
 
@@ -104,6 +105,3 @@ print("You quit the adventure!  :( ")
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-
-
