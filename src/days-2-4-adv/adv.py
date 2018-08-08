@@ -36,7 +36,7 @@ room['library'].e_to = room['overlook']
 name = input('Hello, player.  What is your name?  ')
 player = Player( name, room['outside'], [ ])
 
-print(f"Welcome, {player.name}! Let's begin our adventure:")
+print(f"\n***Welcome, {player.name}! Let's begin our adventure: ***\n")
 print(player.room, "\n", player.room.description)
 # Write a loop that:
 while dir != "q" and dir != "quit":
@@ -66,7 +66,7 @@ while dir != "q" and dir != "quit":
             for item in player.inventory:
                 print("\t" + item.name)
         elif dir == "m" or dir == "menu":
-            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nItems      | get item or drop item \nInventory  | i\nQuit       | q")        
+            print("Move North | n \nMove South | s \nMove East  | e \nMove West  | w \nPick Up Item      | get (item name) \n Drop Item  | drop (item name) \nInventory  | i\nQuit       | q")        
         elif dir != "q":
             print("**Invalid choice. m for options **")
 
@@ -81,18 +81,17 @@ while dir != "q" and dir != "quit":
         if action == "g" or action == "get":
             for i in player.room.items:
                 if parsed_dir[1] == i.name.lower():
-                    print(i.name)
                     print("Adding item to inventory")
                     # put item in player inventory
                     player.inventory.append(i)
                     # remove item from room inventory
                     player.room.items.remove(i)
         elif action == "d" or action == "drop":
-            for i in player.room.items:
+            for i in player.inventory:
                 if parsed_dir[1] == i.name.lower():
-                    print("Removing item to inventory")
+                    print("Removing item from inventory")
                     # put item in player inventory
-                    player.inventory.pop(i)
+                    player.inventory.remove(i)
                     # remove item from room inventory
                     player.room.items.append(i)
 print("You quit the adventure!  :( ")
