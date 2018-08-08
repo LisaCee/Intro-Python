@@ -5,19 +5,14 @@ from item import Item
 # Declare all the rooms
 
 room = {
-    'outside':  Room("--Outside Cave Entrance--",
-                     "North of you, the cave mount beckons", [Item('Key', "This key opens something")]),
-    'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty
-passages run north and east.""", [Item('Lantern', 'Use this lantern to light the way ahead')]),
-    'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
+    'outside':  Room("--Outside Cave Entrance--", "North of you, the cave mount beckons", [Item('Key', "This key opens something")]),
+    'foyer':    Room("--Foyer--", """Dim light filters in from the south. Dusty passages run north and east.""", [Item('Lantern', 'Use this lantern to light the way ahead')]),
+    'overlook': Room("--Grand Overlook--", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""", [Item('Sword', 'It is dangerous to go alone. Take this sword')]),
-    'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", [Item('Coins', 'These coins look like they are worth a lot of money')]),
-    'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
+    'narrow':   Room("--Narrow Passage--", """The narrow passage bends here from west to north. The smell of gold permeates the air.""", [Item('Coins', 'These coins look like they are worth a lot of money')]),
+    'treasure': Room("$$--Treasure Chamber--$$", """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south.""", [Item('Potion', 'An unknown potion. Use at your own risk')]),
-'library': Room("--Library--", """Shhhhhhh.""", [Item('Book', 'Relax and look at this book')]),
+    'library': Room("--Library--", """Shhhhhhh.""", [Item('Book', 'Relax and look at this book')]),
 }
 
 # Link rooms together
@@ -38,23 +33,23 @@ room['library'].e_to = room['overlook']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-name = input('Hello, player.  What is your name?')
+name = input('Hello, player.  What is your name?  ')
 player = Player( name, room['outside'], [ ])
 
 print(f"Welcome, {player.name}! Let's begin our adventure:")
 print(player.room, "\n", player.room.description)
 # Write a loop that:
-while not dir is "q" or dir is "quit":
+while dir != "q" and dir != "quit":
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input *
 
-    dir = input("------------------\nPlease enter a direction... n, s, e, w OR q to quit the game. Press m for more options. \n---------\n")
-    parsed_dir = dir.split()
+    dir = input("------------------\nPlease enter a direction... n, s, e, w OR q to quit the game. Press m for more options. \n---------\n").lower()
+    parsed_dir = dir.lower().split()
 
     if len(parsed_dir) is 1:
         # directional inputs
-        if dir is "n" or dir is "e" or dir is "w" or dir is "s":
+        if dir == "n" or dir == "e" or dir == "w" or dir == "s":
             if hasattr(player.room, dir + '_to'):
                 player.room = getattr(player.room, dir + '_to')
                 print(player.room, "\n", player.room.description, "\n") 
@@ -85,7 +80,8 @@ while not dir is "q" or dir is "quit":
 
         if action == "g" or action == "get":
             for i in player.room.items:
-                if parsed_dir[1] == i.name:
+                if parsed_dir[1] == i.name.lower():
+                    print(i.name)
                     print("Adding item to inventory")
                     # put item in player inventory
                     player.inventory.append(i)
@@ -93,7 +89,7 @@ while not dir is "q" or dir is "quit":
                     player.room.items.remove(i)
         elif action == "d" or action == "drop":
             for i in player.room.items:
-                if parsed_dir[1] == i.name:
+                if parsed_dir[1] == i.name.lower():
                     print("Removing item to inventory")
                     # put item in player inventory
                     player.inventory.pop(i)
