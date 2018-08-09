@@ -82,16 +82,18 @@ while dir != "q" and dir != "quit":
         if dir == "f" or dir == "b" or dir == "l" or dir == "r":
             if hasattr(player.room, dir + '_to'):
                 player.room = getattr(player.room, dir + '_to')
-                print(player.room, "\n", player.room.description, "\n") 
+                print(player.room, "\n", player.room.description, "\n")
+                if player.room.is_light == False and player.light == False: 
+                    for i in player.room.items:
+                        if isinstance(i, LightSource):
+                            print('It\'s dark in here, but you sense that a light source is near')
                 if player.room.is_light == True or player.light == True:
                     print("Items in this room:")     
                     if len(player.room.items) == 0:
-                        print("none")   
+                        print("none")  
                     else:
                         for i in player.room.items:
                             print("\t" + i.name + ": " + i.description)  
-                # elif isinstance(player.room.items, LightSource):
-                #     print('Something')               
                 else:
                     print("It's pitch black. Good luck finding more items in here.")            
             else:
