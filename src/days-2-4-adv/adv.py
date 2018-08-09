@@ -1,13 +1,13 @@
 from room import Room
 from player import Player
-from item import Item, Treasure
+from item import Item, Treasure, LightSource
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("--Outside--", "There is a blue 'police box' in front of you. It is the about the size of an old telephone booth. There is a light on the top. The door is open.", [Item('Key', "This key opens something")]),
 
-    'inside':    Room("--Console Room--", """It's bigger on the inside!!!  You are in a large room with white circles on the walls. There is a console in front of you. There are doorways to either side.""", [Item('Lantern', 'Use this lantern to light the way ahead.')]),
+    'inside':    Room("--Console Room--", """It's bigger on the inside!!!  You are in a large room with white circles on the walls. There is a console in front of you. There are doorways to either side.""", [LightSource('Lantern', 'Use this lantern to light the way ahead.')]),
 
     'console': Room("--TARDIS Console--", """The console is metal and rolling lights.  There are screens and buttons and levers. Are you brave enough to push the button on the left or right, or will you take a step back?""", [Item('Screwdriver', 'It is dangerous to go alone. Take this sonic screwdriver.')]),
 

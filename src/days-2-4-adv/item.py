@@ -33,3 +33,14 @@ class Treasure( Item ):
             #if not i.picked_up
             #update score
             self.picked_up = True
+
+class LightSource( Item ):
+    def __init__( self, name, description):
+        super().__init__(name, description)
+    def on_drop(self, player):
+        print("Are you sure you want to explore in the dark? Okay, then... \nDrops light.")
+        # put item in player inventory
+        player.inventory.remove(self)
+        # remove item from room inventory
+        player.room.items.append(self)
+                    
