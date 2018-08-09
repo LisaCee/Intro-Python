@@ -5,12 +5,15 @@ class Item:
     def __repr__(self):
         return f"{self.name} : {self.description}"
 
-    def on_grab(self, player):    
-        print("Adding item to inventory")
-        # put item in player inventory
-        player.inventory.append(self)
-        # remove item from room inventory
-        player.room.items.remove(self)
+    def on_grab(self, player):   
+        if player.room.is_light == False and player.light == False:
+            print('Good luck finding items in the dark. Go to another room and find a light, then try again.')
+        else:
+            print("Adding item to inventory")
+            # put item in player inventory
+            player.inventory.append(self)
+            # remove item from room inventory
+            player.room.items.remove(self)
 
     def on_drop(self, player):
         print("Removing item from inventory")
@@ -39,12 +42,16 @@ class LightSource( Item ):
         super().__init__(name, description)
 
     def on_grab(self, player):
-        print("Adding light to inventory")
-        # put item in player inventory
-        player.inventory.append(self)
-        # remove item from room inventory
-        player.room.items.remove(self)
-        player.light = True
+        if player.room.is_light == False and player.light == False:
+            print(
+                'Good luck finding that in the dark. Go to another room and find a light, then try again.')
+        else:
+            print("Adding light to inventory")
+            # put item in player inventory
+            player.inventory.append(self)
+            # remove item from room inventory
+            player.room.items.remove(self)
+            player.light = True
         
     def on_drop(self, player):
         light = input("Are you sure you want to explore in the dark? Y/N \n")
@@ -52,6 +59,7 @@ class LightSource( Item ):
             print("Dropping light")
             # remove item in player inventory
             player.inventory.remove(self)
+            player.light = False
             # add item to room inventory
             player.room.items.append(self)
                     

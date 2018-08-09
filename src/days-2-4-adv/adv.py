@@ -15,7 +15,7 @@ room = {
 
     'future': Room("--Outer Space!!!--", """There is a clunky, whirring noise. The police box shakes. You open the door and see ... a black abyss of stars and planets!?! And there are space ships flying around. You don't have a space suit or the nerve to go out there. Go back to safety.""", [Item('Satsuma', 'There is a satsuma orange floating in space in front of you. You pick it up and put it in your pocket. You\'ll never know when you might need some sustenance.')], False),
 
-    'bedroom':   Room("--Bedroom--", """You enter a bedroom with twin-size bunk beds along one wall. It's not exactly the honeymoon suite, but does this mean someone lives in this thing? There is a door in front of you. Do you dare continue on or do you chicken out and go back?""", [Treasure('Coins', 'These coins are clearly ancient, maybe Roman, but they look so shiny and new. I bet they\'re worth a ton of money.', 500), LightSource('Flashlight', 'A portable light source that can safely fit in your pocket!')], False),
+    'bedroom':   Room("--Bedroom--", """You enter a bedroom with twin-size bunk beds along one wall. It's not exactly the honeymoon suite, but does this mean someone lives in this thing? There is a door in front of you. Do you dare continue on or do you chicken out and go back to the left?""", [Treasure('Coins', 'These coins are clearly ancient, maybe Roman, but they look so shiny and new. I bet they\'re worth a ton of money.', 500), LightSource('Flashlight', 'A portable light source that can safely fit in your pocket!')], False),
 
     'garden': Room("--Garden--", """You are now deep inside the box and have discovered a garden. There are flowers bigger than your car and some menacing vines swaying back and forth in the still air.  Do you go back or check out the door to your left?""", [Item('Potion', 'An unknown potion. Use at your own risk'), Treasure('Diamond', 'A HUGE diamond, crystal clear and sparkly', 1000)], False),
 
@@ -56,19 +56,14 @@ room['pool'].r_to = room['garden']
 #
 # Main
 #
-
-# Make a new player object that is currently in the 'outside' room.
 name = input('Hello, player.  What is your name?  ')
 player = Player( name, room['outside'], [ ])
 
-print(f"\n***Welcome, {player.name}! Let's begin our adventure: ***\n")
+print(f"\n***Welcome, {player.name}! Let's begin our adventure. ***\n")
 print(player.room, "\n", player.room.description)
-# Write a loop that:
+
 while dir != "q" and dir != "quit":
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input *
-    
+    # win condition
     if player.score >= 1500:
         print('You\'re rich. Get out of here and spend your riches. You win!!')
         exit()
@@ -76,26 +71,25 @@ while dir != "q" and dir != "quit":
     dir = input("------------------\nPlease enter a direction... f-(forward), b-(backwards), l-(left), r-(right) OR q to quit the game. \nPress m for more options. \n---------\n").lower()
     parsed_dir = dir.lower().split()
 
-
     if len(parsed_dir) is 1:
         # directional inputs
         if dir == "f" or dir == "b" or dir == "l" or dir == "r":
             if hasattr(player.room, dir + '_to'):
                 player.room = getattr(player.room, dir + '_to')
                 print(player.room, "\n", player.room.description, "\n")
-                if player.room.is_light == False and player.light == False: 
-                    for i in player.room.items:
-                        if isinstance(i, LightSource):
-                            print('It\'s dark in here, but you sense that a light source is near')
-                if player.room.is_light == True or player.light == True:
+                if player.room.is_light or player.light:
                     print("Items in this room:")     
                     if len(player.room.items) == 0:
                         print("none")  
                     else:
                         for i in player.room.items:
                             print("\t" + i.name + ": " + i.description)  
-                else:
-                    print("It's pitch black. Good luck finding more items in here.")            
+                elif not player.room.is_light and not player.light: 
+                    for i in player.room.items:
+                        if isinstance(i, LightSource):
+                            print('It\'s dark in here, but you sense that a light source is near')
+                    else:
+                        print("It's very dark in here. You can see the the room, but cannot find any items.")
             else:
                 print("xx--That direction is a dead end.--xx")
         elif dir == "i" or dir == "inventory":
@@ -108,8 +102,7 @@ while dir != "q" and dir != "quit":
             print("Move Forward   | f \nMove Backwards | b \nMove Right     | r \nMove Left      | l \nPick Up Item   | get (item name) \nDrop Item      | drop (item name) \nInventory      | i \nScore          | s\nQuit           | q")        
         elif dir != "q":
             print("**Invalid choice. m for options **")
-
-        
+   
     if len(parsed_dir) > 1:
         action = parsed_dir[0]
         item = ""
@@ -129,7 +122,3 @@ while dir != "q" and dir != "quit":
                    i.on_drop(player)
 print("You end the adventure! You step outside the box. There is a whoop-whoop noise and the box disappears. Maybe some day you will see the box again and can explore further.  :( ")
 "Exit"
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
