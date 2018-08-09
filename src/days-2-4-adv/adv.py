@@ -5,23 +5,23 @@ from item import Item, Treasure, LightSource
 # Declare all the rooms
 
 room = {
-    'outside':  Room("--Outside--", "There is a blue 'police box' in front of you. It is the about the size of an old telephone booth. There is a light on the top. The door is open.", [Item('Key', "This key opens something")]),
+    'outside':  Room("--Outside--", "There is a blue 'police box' in front of you. It is the about the size of an old telephone booth. There is a light on the top. The door is open.", [Item('Key', "This key opens something")], True),
 
-    'inside':    Room("--Console Room--", """It's bigger on the inside!!!  You are in a large room with white circles on the walls. There is a console in front of you. There are doorways to either side.""", [LightSource('Lantern', 'Use this lantern to light the way ahead.')]),
+    'inside':    Room("--Console Room--", """It's bigger on the inside!!!  You are in a large room with white circles on the walls. There is a console in front of you. There are doorways to either side.""", [LightSource('Lantern', 'Use this lantern to light the way ahead.')], True),
 
-    'console': Room("--TARDIS Console--", """The console is metal and rolling lights.  There are screens and buttons and levers. Are you brave enough to push the button on the left or right, or will you take a step back?""", [Item('Screwdriver', 'It is dangerous to go alone. Take this sonic screwdriver.')]),
+    'console': Room("--TARDIS Console--", """The console is metal and rolling lights.  There are screens and buttons and levers. Are you brave enough to push the button on the left or right, or will you take a step back?""", [Item('Screwdriver', 'It is dangerous to go alone. Take this sonic screwdriver.')], True),
 
-    'past': Room("--Dinosaurs!?!--", """There is a clunky, whirring noise. The police box shakes. You open the door and see ... dinosaurs!?! And the sky is purple. You did not sign up for this. Go back to safety.""", [Item('Fez', 'How is there a fez in this wild place? You put in on your head - just in case. ')]),
+    'past': Room("--Dinosaurs!?!--", """There is a clunky, whirring noise. The police box shakes. You open the door and see ... dinosaurs!?! And the sky is purple. You did not sign up for this. Go back to safety.""", [Item('Fez', 'How is there a fez in this wild place? You put in on your head - just in case. ')], True),
 
-    'future': Room("--Outer Space!!!--", """There is a clunky, whirring noise. The police box shakes. You open the door and see ... a black abyss of stars and planets!?! And there are space ships flying around. You don't have a space suit or the nerve to go out there. Go back to safety.""", [Item('Satsuma', 'There is a satsuma orange floating in space in front of you. You pick it up and put it in your pocket. You\'ll never know when you might need some sustenance.')]),
+    'future': Room("--Outer Space!!!--", """There is a clunky, whirring noise. The police box shakes. You open the door and see ... a black abyss of stars and planets!?! And there are space ships flying around. You don't have a space suit or the nerve to go out there. Go back to safety.""", [Item('Satsuma', 'There is a satsuma orange floating in space in front of you. You pick it up and put it in your pocket. You\'ll never know when you might need some sustenance.')], False),
 
-    'bedroom':   Room("--Bedroom--", """You enter a bedroom with twin-size bunk beds along one wall. It's not exactly the honeymoon suite, but does this mean someone lives in this thing? There is a door in front of you. Do you dare continue on or do you chicken out and go back?""", [Treasure('Coins', 'These coins are clearly ancient, maybe Roman, but they look so shiny and new. I bet they\'re worth a ton of money.', 500)]),
+    'bedroom':   Room("--Bedroom--", """You enter a bedroom with twin-size bunk beds along one wall. It's not exactly the honeymoon suite, but does this mean someone lives in this thing? There is a door in front of you. Do you dare continue on or do you chicken out and go back?""", [Treasure('Coins', 'These coins are clearly ancient, maybe Roman, but they look so shiny and new. I bet they\'re worth a ton of money.', 500), LightSource('Flashlight', 'A portable light source that can safely fit in your pocket!')], False),
 
-    'garden': Room("--Garden--", """You are now deep inside the box and have discovered a garden. There are flowers bigger than your car and some menacing vines swaying back and forth in the still air.  Do you go back or check out the door to your left?""", [Item('Potion', 'An unknown potion. Use at your own risk'), Treasure('Diamond', 'A HUGE diamond, crystal clear and sparkly', 1000)]),
+    'garden': Room("--Garden--", """You are now deep inside the box and have discovered a garden. There are flowers bigger than your car and some menacing vines swaying back and forth in the still air.  Do you go back or check out the door to your left?""", [Item('Potion', 'An unknown potion. Use at your own risk'), Treasure('Diamond', 'A HUGE diamond, crystal clear and sparkly', 1000)], False),
 
-    'pool': Room("--Swimming Pool--", """There is a large swimming pool with crystal blue water and floaty toys. There are fluffy towels on lounge chairs on the deck. There is a door in front of you or would you like to go back he way you came?""", [Item('Scarf', 'Who needs a super-long, multi-colored scarf at the pool?')]),
+    'pool': Room("--Swimming Pool--", """There is a large swimming pool with crystal blue water and floaty toys. There are fluffy towels on lounge chairs on the deck. There is a door in front of you or would you like to go back he way you came?""", [Item('Scarf', 'Who needs a super-long, multi-colored scarf at the pool?')], True),
 
-    'library': Room("--Library--", """You walk into a ginormous library filled with millions of books. There is a note tacked to a nearby shelf. It reads: \n'You want weapons? You're in a library. Books are the best weapon in the world. This room's the greatest arsenal you could have. Arm yourself.' \nThere is a doorway to your right and behind you. Or would you like to stay and read a while?""", [Item('Book', 'This book has a metallic cover. You open it up and see a language you don\'t recognize. It was published in the year 8575.'), Treasure('Sword', 'A gold, Arthurian sword inlaid with rubies.', 700)],),
+    'library': Room("--Library--", """You walk into a ginormous library filled with millions of books. There is a note tacked to a nearby shelf. It reads: \n'You want weapons? You're in a library. Books are the best weapon in the world. This room's the greatest arsenal you could have. Arm yourself.' \nThere is a doorway to your right and behind you. Or would you like to stay and read a while?""", [Item('Book', 'This book has a metallic cover. You open it up and see a language you don\'t recognize. It was published in the year 8575.'), Treasure('Sword', 'A gold, Arthurian sword inlaid with rubies.', 700)], False),
 }
 
 # Link rooms together
@@ -83,12 +83,17 @@ while dir != "q" and dir != "quit":
             if hasattr(player.room, dir + '_to'):
                 player.room = getattr(player.room, dir + '_to')
                 print(player.room, "\n", player.room.description, "\n") 
-                print("Items in this room:")     
-                if len(player.room.items) == 0:
-                    print("none")   
+                if player.room.is_light == True or player.light == True:
+                    print("Items in this room:")     
+                    if len(player.room.items) == 0:
+                        print("none")   
+                    else:
+                        for i in player.room.items:
+                            print("\t" + i.name + ": " + i.description)  
+                # elif isinstance(player.room.items, LightSource):
+                #     print('Something')               
                 else:
-                    for i in player.room.items:
-                        print("\t" + i.name + ": " + i.description)
+                    print("It's pitch black. Good luck finding more items in here.")            
             else:
                 print("xx--That direction is a dead end.--xx")
         elif dir == "i" or dir == "inventory":

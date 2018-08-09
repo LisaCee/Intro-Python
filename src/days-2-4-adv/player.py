@@ -6,3 +6,4 @@ class Player:
         self.room = room
         self.inventory = inventory
         self.score = 0
+        self.light = False

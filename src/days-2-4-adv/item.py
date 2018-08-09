@@ -37,10 +37,21 @@ class Treasure( Item ):
 class LightSource( Item ):
     def __init__( self, name, description):
         super().__init__(name, description)
-    def on_drop(self, player):
-        print("Are you sure you want to explore in the dark? Okay, then... \nDrops light.")
+
+    def on_grab(self, player):
+        print("Adding light to inventory")
         # put item in player inventory
-        player.inventory.remove(self)
+        player.inventory.append(self)
         # remove item from room inventory
-        player.room.items.append(self)
+        player.room.items.remove(self)
+        player.light = True
+        
+    def on_drop(self, player):
+        light = input("Are you sure you want to explore in the dark? Y/N \n")
+        if light.lower() == "y":
+            print("Dropping light")
+            # remove item in player inventory
+            player.inventory.remove(self)
+            # add item to room inventory
+            player.room.items.append(self)
                     
