@@ -68,7 +68,13 @@ while dir != "q" and dir != "quit":
         print('You\'re rich. Get out of here and spend your riches. You win!!')
         exit()
 
-    dir = input("------------------\nPlease enter a direction... f-(forward), b-(backwards), l-(left), r-(right) OR q to quit the game. \nPress m for more options. \n---------\n").lower()
+    dir = input("------------------\nPlease enter a direction... \n" 
+    "        F\n"
+    "        |\n"
+    "   L----|----R\n"
+    "        |\n"
+    "        B\n"
+     " OR q to quit the game. \nPress m for more options. \n---------\n").lower()
     parsed_dir = dir.lower().split()
 
     if len(parsed_dir) is 1:
@@ -76,30 +82,34 @@ while dir != "q" and dir != "quit":
         if dir == "f" or dir == "b" or dir == "l" or dir == "r":
             if hasattr(player.room, dir + '_to'):
                 player.room = getattr(player.room, dir + '_to')
-                print(player.room, "\n", player.room.description, "\n")
+                print(player.room, "\n", player.room.description)
                 if player.room.is_light or player.light:
-                    print("Items in this room:")     
+                    print("*Items in this room:*")     
                     if len(player.room.items) == 0:
                         print("none")  
                     else:
                         for i in player.room.items:
-                            print("\t" + i.name + ": " + i.description)  
+                            print(i.name + ": " + i.description)  
                 elif not player.room.is_light and not player.light: 
                     for i in player.room.items:
                         if isinstance(i, LightSource):
-                            print('It\'s dark in here, but you sense that a light source is near')
+                            print('     It\'s dark in here, but you sense that a light source is near.')
                     else:
                         print("It's very dark in here. You can see the the room, but cannot find any items.")
             else:
                 print("xx--That direction is a dead end.--xx")
+
         elif dir == "i" or dir == "inventory":
             print("Inventory:")
             for item in player.inventory:
                 print("\t" + item.name)
+
         elif dir == "s" or dir == "score":
-            print("Score: " + str(player.score))        
+            print("Score: " + str(player.score)) 
+
         elif dir == "m" or dir == "menu":
-            print("Move Forward   | f \nMove Backwards | b \nMove Right     | r \nMove Left      | l \nPick Up Item   | get (item name) \nDrop Item      | drop (item name) \nInventory      | i \nScore          | s\nQuit           | q")        
+            print("Move Forward   | f \nMove Backwards | b \nMove Right     | r \nMove Left      | l \nPick Up Item   | get (item name) \nDrop Item      | drop (item name) \nInventory      | i \nScore          | s\nQuit           | q")     
+
         elif dir != "q":
             print("**Invalid choice. m for options **")
    
@@ -115,10 +125,13 @@ while dir != "q" and dir != "quit":
                 if parsed_dir[1] == i.name.lower():
                     #on_grab item
                     i.on_grab(player)
-                    
+                elif parsed_dir[1] != i.name.lower():
+                    print("That item is not in this room.")    
         elif action == "d" or action == "drop":
             for i in player.inventory:
                 if parsed_dir[1] == i.name.lower():
                    i.on_drop(player)
-print("You end the adventure! You step outside the box. There is a whoop-whoop noise and the box disappears. Maybe some day you will see the box again and can explore further.  :( ")
+                else:
+                    print("You don't have that item.")   
+print("You end your adventure! You step outside the box. There is a whoop-whoop noise and the box disappears. Maybe some day you will see the box again and can explore further.  :( ")
 "Exit"

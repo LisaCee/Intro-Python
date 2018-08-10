@@ -5,8 +5,8 @@ class Item:
     def __repr__(self):
         return f"{self.name} : {self.description}"
 
-    def on_grab(self, player):   
-        if player.room.is_light == False and player.light == False:
+    def on_grab(self, player):  
+        if not player.room.is_light and not player.light:
             print('Good luck finding items in the dark. Go to another room and find a light, then try again.')
         else:
             print("Adding item to inventory")
@@ -31,7 +31,7 @@ class Treasure( Item ):
 
     def on_grab(self, player):
         super().on_grab(player)
-        if self.picked_up == False:
+        if not self.picked_up:
             player.score += self.value
             #if not i.picked_up
             #update score
@@ -42,7 +42,7 @@ class LightSource( Item ):
         super().__init__(name, description)
 
     def on_grab(self, player):
-        if player.room.is_light == False and player.light == False:
+        if not player.room.is_light and not player.light:
             print(
                 'Good luck finding that in the dark. Go to another room and find a light, then try again.')
         else:
@@ -62,4 +62,3 @@ class LightSource( Item ):
             player.light = False
             # add item to room inventory
             player.room.items.append(self)
-                    

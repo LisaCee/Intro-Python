@@ -8,5 +8,4 @@ class Room:
         self.is_light = is_light
 
     def __repr__(self):
-        return f"{self.name}"    
-
+        return f"{self.name}"
