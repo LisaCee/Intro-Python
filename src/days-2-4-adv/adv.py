@@ -125,13 +125,13 @@ while dir != "q" and dir != "quit":
                 if parsed_dir[1] == i.name.lower():
                     #on_grab item
                     i.on_grab(player)
-                elif parsed_dir[1] != i.name.lower():
-                    print("That item is not in this room.")    
+            if parsed_dir[1] != i.name.lower():
+                print("That item is not in this room.")    
         elif action == "d" or action == "drop":
             for i in player.inventory:
                 if parsed_dir[1] == i.name.lower():
                    i.on_drop(player)
-                else:
-                    print("You don't have that item.")   
+            if parsed_dir[1] != player.inventory:
+                print("You don't have that item.")   
 print("You end your adventure! You step outside the box. There is a whoop-whoop noise and the box disappears. Maybe some day you will see the box again and can explore further.  :( ")
 "Exit"
